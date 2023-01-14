@@ -13,7 +13,6 @@ addBtn.addEventListener('click', () => {
   li.classList.add('m-1');
   li.textContent = `Amount : ${expense} Type : ${typeExpense.value}`;
   listContainer.appendChild(li);
-  //   console.log(expense);
   spent += expense;
   document.getElementById('total-expense').innerText = spent;
 });
