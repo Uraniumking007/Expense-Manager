@@ -8,11 +8,19 @@ let spent = 0;
 
 let expenses = JSON.parse(localStorage.getItem('expenditure')) || [];
 
+inputExpense.addEventListener('change', (e) => {
+  expense = Number(inputExpense.value);
+});
+
 addBtn.addEventListener('click', () => {
-  addExpenditure();
-  addCard();
-  inputExpense.value = '';
-  typeExpense.value = 0;
+  if (expense != 0 || null) {
+    addExpenditure();
+    addCard();
+    inputExpense.value = '';
+    typeExpense.value = 0;
+  } else {
+    alert('Enter Some Value');
+  }
 });
 const addExpenditure = () => {
   let expenditure = {
@@ -23,24 +31,20 @@ const addExpenditure = () => {
   localStorage.setItem('expenditure', JSON.stringify(expenses));
 };
 function addCard() {
-  if (expense != 0 || null) {
-    let li = document.createElement('div');
-    li.classList.add('bg-grey');
-    li.classList.add('text-white');
-    li.classList.add('rounded-lg');
-    li.classList.add('p-2');
-    li.classList.add('w-full');
-    li.classList.add('m-1');
-    li.textContent = `Amount : ${expense} Type : ${typeExpense.value}`;
-    listContainer.appendChild(li);
-    spent += expense;
-    document.getElementById('total-expense').innerText = spent;
-    if (spent != 0) {
-      expenseImg.classList.add('hidden');
-      expenseImg.classList.remove('flex');
-    }
-  } else {
-    alert('Enter Some Value');
+  let li = document.createElement('div');
+  li.classList.add('bg-grey');
+  li.classList.add('text-white');
+  li.classList.add('rounded-lg');
+  li.classList.add('p-2');
+  li.classList.add('w-full');
+  li.classList.add('m-1');
+  li.textContent = `Amount : ${expense} Type : ${typeExpense.value}`;
+  listContainer.appendChild(li);
+  spent += expense;
+  document.getElementById('total-expense').innerText = spent;
+  if (spent != 0) {
+    expenseImg.classList.add('hidden');
+    expenseImg.classList.remove('flex');
   }
 }
 
