@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Manager</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script type="module" src="./main.js"></script>
+    <link href="/dist/output.css" rel="stylesheet" />
+  </head>
+  <body class="bg-space h-screen">
+    <header
+      class="text-white text-center bg-teal flex justify-between items-center p-4 h-1/10"
+    >
+      <div class="">Expense Manager</div>
+      <div class="flex content-evenly justify-center">
+        <button
+          type="button"
+          class="bg-teal hover:bg-grey transition-all pt-2 pb-2 pr-3 pl-3 rounded-lg"
+        >
+          Home
+        </button>
+        <button
+          type="button"
+          class="bg-teal hover:bg-grey transition-all pt-2 pb-2 pr-3 pl-3 rounded-lg"
+        >
+          About
+        </button>
+      </div>
+    </header>
+    <div class="bg-space flex justify-center text-black flex-col w-full">
+      <div class="flex justify-center text-center items-center flex-col mt-2">
+        Expense Amount
+        <input
+          type="number"
+          class="bg-white placeholder:text-black placeholder:opacity-60 p-2 m-2 w-2/5"
+          id="expense-amount"
+          placeholder="Money Spent"
+        />
+
+        <span class="input-group-text"> Category </span>
+        <select
+          class="bg-white text-black m-2 w-48 h-8"
+          id="inputGroupSelect03"
+        >
+          <option value="0" class="text-opacity-50" selected>Choose...</option>
+          <option value="Fun">Fun</option>
+          <option value="Food">Food</option>
+          <option value="Travel">Travel</option>
+          <option value="Expense">Expense</option>
+        </select>
+        <button
+          type="button"
+          class="bg-teal hover:bg-grey transition-all pt-2 pb-2 pr-3 pl-3 rounded-lg"
+          id="add"
+        >
+          Add
+        </button>
+        <div
+          class="total-expense bg-danger m-3 rounded text-center text-2xl bg-red-600"
+          id="total-expense"
+        ></div>
+      </div>
+      <div class="expense-img flex justify-center" id="expense-img">
+        <img src="./assets/undraw_printing_invoices_-5-r4r.svg" alt="" />
+      </div>
+      <div class="expense-list mt-4 w-full" id="expense-list"></div>
+    </div>
+  </body>
+</html>
