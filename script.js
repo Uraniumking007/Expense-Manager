@@ -120,12 +120,25 @@ window.onload = () => {
   }
 };
 //Delete Data From Database
-const delBtn = document.getElementsByClassName('delete-btn');
-console.log(delBtn);
 
-delBtn.forEach((btn) => {
-  btn.addEventListener('click', (e) => {
-    let deleteThis = e.target.id;
-    console.log(deleteThis);
+setTimeout(() => {
+  let deleteDataBtn = document.querySelectorAll('.delete-btn');
+  console.log(deleteDataBtn);
+  deleteDataBtn.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      console.log(e.target.id);
+      deleteBtn(e.target.id);
+    });
   });
-});
+}, 10);
+
+function deleteBtn(value) {
+  // let id = document.getElementById(value);
+  expenses.splice(value, 1);
+  console.log(expenses, value);
+  localStorage.setItem('expenditure', JSON.stringify(expenses));
+  if (expenses.length == 1) {
+    localStorage.removeItem('expenditure');
+  }
+  // localStorage.setItem('expenditure', expenses);
+}
