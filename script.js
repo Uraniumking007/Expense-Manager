@@ -1,9 +1,10 @@
 const inputExpense = document.getElementById('expense-amount');
-let expense = Number(inputExpense.value);
 const listContainer = document.getElementById('expense-list');
 const addBtn = document.getElementById('add');
 const typeExpense = document.getElementById('inputGroupSelect03');
 const expenseImg = document.getElementById('expense-img');
+let expense = inputExpense.value;
+var deleteDataBtn = document.querySelectorAll('.delete-btn');
 let spent = 0;
 
 let expenseID = 0;
@@ -48,29 +49,26 @@ const addExpenditure = () => {
 //Adds Card on click
 function addCard() {
   let ul = document.createElement('div');
-  ul.classList.add('flex');
-  ul.classList.add('justify-between');
-  ul.classList.add('bg-grey');
-  ul.classList.add('rounded-lg');
-  ul.classList.add('p-2');
-  ul.classList.add('w-full');
-  ul.classList.add('m-1');
+  ul.className = 'p-2 m-1 w-full flex justify-between bg-grey rounded-lg';
+  ul.id = expenseID;
   let li = document.createElement('div');
   li.classList.add('text-white');
   li.id = expenseID;
   li.textContent = `Amount : ${expense} Type : ${typeExpense.value}`;
-
   ul.appendChild(li);
   let delBtn = document.createElement('img');
+  delBtn.className = 'w-[20px] h-[20px] delete-btn';
   delBtn.src = '/trash.svg';
-  delBtn.classList.add('w-[20px]');
-  delBtn.classList.add('h-[20px]');
-  delBtn.classList.add('delete-btn');
   delBtn.id = expenseID;
   ul.appendChild(delBtn);
-
+  delBtn.addEventListener('click', (e) => {
+    deleteBtn(e.target.id);
+  });
   // listContainer.appendChild(li);
   listContainer.insertBefore(ul, listContainer.firstChild);
+
+  //del data refresh
+  deleteDataBtn = document.querySelectorAll('.delete-btn');
 
   spent += expense;
   document.getElementById('total-expense').innerText = spent;
@@ -87,13 +85,8 @@ window.onload = () => {
   expensesRev.forEach((expense) => {
     document.querySelector('expense-list');
     let ul = document.createElement('div');
-    ul.classList.add('flex');
-    ul.classList.add('justify-between');
-    ul.classList.add('bg-grey');
-    ul.classList.add('rounded-lg');
-    ul.classList.add('p-2');
-    ul.classList.add('w-full');
-    ul.classList.add('m-1');
+    ul.className = 'p-2 m-1 w-full flex justify-between bg-grey rounded-lg';
+    ul.id = expense.id;
     let li = document.createElement('div');
     li.classList.add('text-white');
     li.id = expense.id;
@@ -102,43 +95,30 @@ window.onload = () => {
     ul.appendChild(li);
     let delBtn = document.createElement('img');
     delBtn.src = '/trash.svg';
-    delBtn.classList.add('w-[20px]');
-    delBtn.classList.add('delete-btn');
-    delBtn.classList.add('h-[20px]');
+    delBtn.className = 'w-[20px] h-[20px] delete-btn';
     delBtn.id = expense.id;
+    delBtn.addEventListener('click', (e) => {
+      deleteBtn(e.target.id);
+    });
     ul.appendChild(delBtn);
 
-    // listContainer.insertBefore(li, listContainer.firstChild);
     spent += expense.amount;
     document.getElementById('total-expense').innerText = spent;
   });
-  console.log(expensesRev[expensesLen - 1]);
-  // console.log(listContainer.innerText);
   if (spent != 0) {
     expenseImg.classList.add('hidden');
     expenseImg.classList.remove('flex');
   }
 };
-//Delete Data From Database
-
-setTimeout(() => {
-  let deleteDataBtn = document.querySelectorAll('.delete-btn');
-  console.log(deleteDataBtn);
-  deleteDataBtn.forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      console.log(e.target.id);
-      deleteBtn(e.target.id);
-    });
-  });
-}, 10);
-
 function deleteBtn(value) {
-  // let id = document.getElementById(value);
-  expenses.splice(value, 1);
-  console.log(expenses, value);
-  localStorage.setItem('expenditure', JSON.stringify(expenses));
+  // console.log(expenses, value);
+  document.getElementById(value).remove();
+  spent -= expenses[value].amount;
+  document.getElementById('total-expense').innerText = spent;
   if (expenses.length == 1) {
     localStorage.removeItem('expenditure');
+  } else {
+    expenses.splice(value, 1);
+    localStorage.setItem('expenditure', JSON.stringify(expenses));
   }
-  // localStorage.setItem('expenditure', expenses);
 }
