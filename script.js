@@ -4,11 +4,9 @@ const addBtn = document.getElementById('add');
 const typeExpense = document.getElementById('inputGroupSelect03');
 const expenseImg = document.getElementById('expense-img');
 let expense = inputExpense.value;
-var deleteDataBtn = document.querySelectorAll('.delete-btn');
-let spent = 0;
-
-let expenseID = 0;
 let expenses = JSON.parse(localStorage.getItem('expenditure')) || [];
+let spent = 0;
+let expenseID = 0;
 let expensesLen = Number(expenses.length);
 
 // Expense Id Calculator
@@ -64,12 +62,7 @@ function addCard() {
   delBtn.addEventListener('click', (e) => {
     deleteBtn(e.target.id);
   });
-  // listContainer.appendChild(li);
   listContainer.insertBefore(ul, listContainer.firstChild);
-
-  //del data refresh
-  deleteDataBtn = document.querySelectorAll('.delete-btn');
-
   spent += expense;
   document.getElementById('total-expense').innerText = spent;
   if (spent != 0) {
@@ -111,7 +104,6 @@ window.onload = () => {
   }
 };
 function deleteBtn(value) {
-  // console.log(expenses, value);
   document.getElementById(value).remove();
   spent -= expenses[value].amount;
   document.getElementById('total-expense').innerText = spent;
