@@ -1,20 +1,32 @@
 const inputExpense = document.getElementById('expense-amount');
+const expenseName = document.getElementById('expense-name');
 const listContainer = document.getElementById('expense-list');
 const addBtn = document.getElementById('add');
 const typeExpense = document.getElementById('inputGroupSelect03');
 const expenseImg = document.getElementById('expense-img');
 const totalExpense = document.getElementById('total-expense');
+const customOption = document.getElementById('Custom');
 let expense = inputExpense.value;
 let expenses = JSON.parse(localStorage.getItem('expenditure')) || [];
 let spent = 0;
 let expenseID = 0;
 let expensesLen = Number(expenses.length);
+let category = typeExpense.value;
 
 // Expense Id Calculator
 if (expensesLen != 0) {
   expenseID = expenses[expensesLen - 1].id;
   expenseID++;
 }
+
+typeExpense.addEventListener('change', (e) => {
+  console.log(typeExpense.value);
+  if (typeExpense.value == 'Custom') {
+    expenseName.classList.remove('hidden');
+  } else {
+    expenseName.classList.add('hidden');
+  }
+});
 
 // Input Listener
 inputExpense.addEventListener('change', (e) => {
@@ -36,10 +48,16 @@ addBtn.addEventListener('click', () => {
 
 //Adds data into database
 const addExpenditure = () => {
+  console.log(category);
+
+  if (typeExpense.value == 'Custom') {
+    category = expenseName.value;
+    console.log(category);
+  }
   let expenditure = {
     id: expenseID,
     amount: Number(inputExpense.value),
-    type: typeExpense.value,
+    type: category,
   };
   expenses.push(expenditure);
   localStorage.setItem('expenditure', JSON.stringify(expenses));
@@ -53,7 +71,7 @@ const addCard = () => {
   let li = document.createElement('div');
   li.classList.add('text-white');
   li.id = expenseID;
-  li.textContent = `Amount : ${expense} Type : ${typeExpense.value}`;
+  li.textContent = `Amount : ${expense} Category : ${category}`;
   ul.appendChild(li);
   let delBtn = document.createElement('img');
   delBtn.className = 'w-[20px] h-[20px] delete-btn';
@@ -87,7 +105,7 @@ window.onload = () => {
     let li = document.createElement('div');
     li.classList.add('text-white');
     li.id = expense.id;
-    li.textContent = `Amount : ${expense.amount} Type : ${expense.type}`;
+    li.textContent = `Amount : ${expense.amount} Category : ${expense.type}`;
     listContainer.appendChild(ul);
     ul.appendChild(li);
     let delBtn = document.createElement('img');
