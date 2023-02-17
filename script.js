@@ -3,6 +3,7 @@ const listContainer = document.getElementById('expense-list');
 const addBtn = document.getElementById('add');
 const typeExpense = document.getElementById('inputGroupSelect03');
 const expenseImg = document.getElementById('expense-img');
+const totalExpense = document.getElementById('total-expense');
 let expense = inputExpense.value;
 let expenses = JSON.parse(localStorage.getItem('expenditure')) || [];
 let spent = 0;
@@ -45,7 +46,7 @@ const addExpenditure = () => {
 };
 
 //Adds Card on click
-function addCard() {
+const addCard = () => {
   let ul = document.createElement('div');
   ul.className = 'p-2 m-1 w-full flex justify-between bg-grey rounded-lg';
   ul.id = expenseID;
@@ -64,12 +65,15 @@ function addCard() {
   });
   listContainer.insertBefore(ul, listContainer.firstChild);
   spent += expense;
-  document.getElementById('total-expense').innerText = spent;
+  totalExpense.innerText = spent;
   if (spent != 0) {
     expenseImg.classList.add('hidden');
     expenseImg.classList.remove('flex');
   }
-}
+  if (totalExpense.classList.contains('hidden')) {
+    totalExpense.classList.remove('hidden');
+  }
+};
 
 // Adds cards on load
 window.onload = () => {
@@ -96,21 +100,27 @@ window.onload = () => {
     ul.appendChild(delBtn);
 
     spent += expense.amount;
-    document.getElementById('total-expense').innerText = spent;
+    totalExpense.innerText = spent;
   });
   if (spent != 0) {
     expenseImg.classList.add('hidden');
     expenseImg.classList.remove('flex');
   }
 };
-function deleteBtn(value) {
+const deleteBtn = (value) => {
   document.getElementById(value).remove();
   spent -= expenses[value].amount;
-  document.getElementById('total-expense').innerText = spent;
+  totalExpense.innerText = spent;
   if (expenses.length == 1) {
     localStorage.removeItem('expenditure');
   } else {
     expenses.splice(value, 1);
     localStorage.setItem('expenditure', JSON.stringify(expenses));
   }
-}
+  if (spent == 0) {
+    expenseImg.classList.add('flex');
+    expenseImg.classList.remove('hidden');
+    // totalExpense.classList.remove('flex');
+    totalExpense.classList.add('hidden');
+  }
+};
