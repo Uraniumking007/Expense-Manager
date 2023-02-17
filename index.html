@@ -38,7 +38,6 @@
           id="expense-amount"
           placeholder="Money Spent"
         />
-
         <span class="input-group-text"> Category </span>
         <select
           class="bg-white text-black m-2 w-48 h-8"
@@ -49,7 +48,14 @@
           <option value="Food">Food</option>
           <option value="Travel">Travel</option>
           <option value="Expense">Expense</option>
+          <option value="Custom">Custom</option>
         </select>
+        <input
+          type="text"
+          class="bg-white hidden placeholder:text-black placeholder:opacity-60 p-2 m-2 w-2/5 appearance-none"
+          id="expense-name"
+          placeholder="Money Spent on"
+        />
         <button
           type="button"
           class="bg-teal hover:bg-grey border border-transparent m-1 hover:border hover:border-black hover:border-collapse hover:border-solid transition-all pt-2 pb-2 pr-5 pl-5 rounded-lg"
