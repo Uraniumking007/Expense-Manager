@@ -66,7 +66,7 @@ const addExpenditure = () => {
 //Adds Card on click
 const addCard = () => {
   let ul = document.createElement('div');
-  ul.className = 'p-2 m-1 w-full flex justify-between bg-grey rounded-lg';
+  ul.className = 'p-2 m-1 w-full flex justify-between bg-grey-dark rounded-lg';
   ul.id = expenseID;
   let li = document.createElement('div');
   li.classList.add('text-white');
@@ -77,7 +77,19 @@ const addCard = () => {
   delBtn.className = 'w-[20px] h-[20px] delete-btn';
   delBtn.src = '/trash.svg';
   delBtn.id = expenseID;
+  let editBtn = document.createElement('img');
+  editBtn.src = '/editIcon.svg';
+  editBtn.className = 'w-[20px] h-[20px] edit-btn';
+  editBtn.id = expense.id;
+  editBtn.addEventListener('click', (e) => {
+    // deleteBtn(e.target.id);
+  });
   ul.appendChild(delBtn);
+  const iconWrapper = document.createElement('div');
+  iconWrapper.className = 'flex justify-between';
+  ul.appendChild(iconWrapper);
+  iconWrapper.appendChild(editBtn);
+  iconWrapper.appendChild(delBtn);
   delBtn.addEventListener('click', (e) => {
     deleteBtn(e.target.id);
   });
@@ -100,7 +112,8 @@ window.onload = () => {
   expensesRev.forEach((expense) => {
     document.querySelector('expense-list');
     let ul = document.createElement('div');
-    ul.className = 'p-2 m-1 w-full flex justify-between bg-grey rounded-lg';
+    ul.className =
+      'p-2 m-1 w-full flex justify-between bg-grey-dark rounded-lg';
     ul.id = expense.id;
     let li = document.createElement('div');
     li.classList.add('text-white');
@@ -115,7 +128,19 @@ window.onload = () => {
     delBtn.addEventListener('click', (e) => {
       deleteBtn(e.target.id);
     });
+    let editBtn = document.createElement('img');
+    editBtn.src = '/editIcon.svg';
+    editBtn.className = 'w-[20px] h-[20px] edit-btn';
+    editBtn.id = expense.id;
+    editBtn.addEventListener('click', (e) => {
+      deleteBtn(e.target.id);
+    });
     ul.appendChild(delBtn);
+    const iconWrapper = document.createElement('div');
+    iconWrapper.className = 'flex justify-between';
+    ul.appendChild(iconWrapper);
+    iconWrapper.appendChild(editBtn);
+    iconWrapper.appendChild(delBtn);
 
     spent += expense.amount;
     totalExpense.innerText = spent;
