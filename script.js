@@ -67,6 +67,7 @@ const addExpenditure = () => {
 
 //Adds Card on click
 const addCard = () => {
+  expenses = JSON.parse(localStorage.getItem('expenditure')) || [];
   let ul = document.createElement('div');
   ul.className = 'p-2 m-1 w-full flex justify-between bg-grey-dark rounded-lg';
   ul.id = expenseID;
@@ -180,7 +181,9 @@ const deleteBtn = (value) => {
   }
 };
 const editExpense = (value) => {
-  console.log(expenses[value]);
+  console.log(expenses[value].amount);
+  inputExpense.value = expenses[value].amount;
+  typeExpense.value = expenses[value].type;
   // if (typeExpense.value == 'Custom') {
   //   category = expenseName.value;
   //   console.log(category);
