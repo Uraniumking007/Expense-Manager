@@ -51,6 +51,7 @@ addBtn.addEventListener('click', () => {
 //Adds data into database
 const addExpenditure = () => {
   console.log(category);
+  expenses = JSON.parse(localStorage.getItem('expenditure')) || [];
 
   if (typeExpense.value == 'Custom') {
     category = expenseName.value;
@@ -67,7 +68,6 @@ const addExpenditure = () => {
 
 //Adds Card on click
 const addCard = () => {
-  expenses = JSON.parse(localStorage.getItem('expenditure')) || [];
   let ul = document.createElement('div');
   ul.className = 'p-2 m-1 w-full flex justify-between bg-grey-dark rounded-lg';
   ul.id = expenseID;
