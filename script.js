@@ -40,6 +40,8 @@ addBtn.addEventListener('click', () => {
     addCard();
     inputExpense.value = '';
     typeExpense.value = 0;
+    expenseName.classList.add('hidden');
+    expenseName.classList.remove('flex');
     expenseID++;
   } else {
     alert('Enter Some Value');
@@ -82,7 +84,7 @@ const addCard = () => {
   editBtn.className = 'w-[20px] h-[20px] edit-btn';
   editBtn.id = expense.id;
   editBtn.addEventListener('click', (e) => {
-    // deleteBtn(e.target.id);
+    editExpense(e.target.id);
   });
   ul.appendChild(delBtn);
   const iconWrapper = document.createElement('div');
@@ -105,8 +107,17 @@ const addCard = () => {
   }
 };
 
+//index and id changer
+
+const indexer = () => {
+  expenses.forEach((expense) => {
+    expense.id = expenses.indexOf(expense);
+  });
+};
+
 // Adds cards on load
 window.onload = () => {
+  indexer();
   const expensesRev = [...expenses];
   expensesRev.reverse();
   expensesRev.forEach((expense) => {
@@ -133,7 +144,7 @@ window.onload = () => {
     editBtn.className = 'w-[20px] h-[20px] edit-btn';
     editBtn.id = expense.id;
     editBtn.addEventListener('click', (e) => {
-      deleteBtn(e.target.id);
+      editExpense(e.target.id);
     });
     ul.appendChild(delBtn);
     const iconWrapper = document.createElement('div');
@@ -151,6 +162,7 @@ window.onload = () => {
   }
 };
 const deleteBtn = (value) => {
+  console.log(expenses);
   document.getElementById(value).remove();
   spent -= expenses[value].amount;
   totalExpense.innerText = spent;
@@ -166,4 +178,19 @@ const deleteBtn = (value) => {
     // totalExpense.classList.remove('flex');
     totalExpense.classList.add('hidden');
   }
+};
+const editExpense = (value) => {
+  console.log(expenses[value]);
+  // if (typeExpense.value == 'Custom') {
+  //   category = expenseName.value;
+  //   console.log(category);
+  // }
+
+  // let expenditure = {
+  //   id: expenseID,
+  //   amount: Number(inputExpense.value),
+  //   type: category,
+  // };
+  // expenses.push(expenditure);
+  // localStorage.setItem('expenditure', JSON.stringify(expenses));
 };
