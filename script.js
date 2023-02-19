@@ -77,7 +77,7 @@ const addExpenditure = () => {
 const addCard = () => {
   indexer();
   let ul = document.createElement('div');
-  ul.className = `p-2 m-1 w-full flex justify-between bg-grey-dark rounded-lg ${expense.id} `;
+  ul.className = `p-2 m-1 w-[50%] flex justify-between bg-grey-dark rounded-lg ${expense.id} `;
   ul.id = expenseID;
   let li = document.createElement('div');
   li.classList.add('text-white');
@@ -133,7 +133,7 @@ window.onload = () => {
   expensesRev.forEach((expense) => {
     document.querySelector('expense-list');
     let ul = document.createElement('div');
-    ul.className = `p-2 m-1 w-full flex justify-between bg-grey-dark rounded-lg ${expense.id} `;
+    ul.className = `p-2 m-1 w-[50%] flex justify-between bg-grey-dark rounded-lg ${expense.id} `;
     ul.id = expense.id;
     let li = document.createElement('div');
     li.classList.add('text-white');
