@@ -102,7 +102,7 @@ const addCard = () => {
   const iconWrapper = document.createElement('div');
   iconWrapper.className = 'flex justify-between';
   ul.appendChild(iconWrapper);
-  iconWrapper.appendChild(editBtn);
+  // iconWrapper.appendChild(editBtn);
   iconWrapper.appendChild(delBtn);
   listContainer.insertBefore(ul, listContainer.firstChild);
   spent += expense;
