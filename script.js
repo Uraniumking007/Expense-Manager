@@ -136,6 +136,8 @@ const updateExpenseList = () => {
     editBtn.id = expense.id;
     editBtn.addEventListener('click', (e) => {
       editExpense(e.target.id);
+      delBtn.classList.add('hidden');
+      editBtn.classList.add('hidden');
     });
     const iconWrapper = document.createElement('div');
     iconWrapper.className = 'flex justify-between';
@@ -192,12 +194,15 @@ const editExpense = (objId) => {
   console.log(expenses, expenses[objId]);
   const list = document.getElementById(objId);
   const amountEditor = document.createElement('input');
+  amountEditor.classList.add('text-white');
   list.appendChild(amountEditor);
   const typeEditor = document.createElement('input');
+  typeEditor.classList.add('text-white');
   amountEditor.value = expenses[objId].amount;
   typeEditor.value = expenses[objId].type;
   list.appendChild(typeEditor);
   const saveBtn = document.createElement('button');
+  saveBtn.className = 'text-white hover:bg-grey hover:text-black rounded p-1';
   saveBtn.innerText = 'Save';
   saveBtn.id = objId;
   saveBtn.classList.add('saveBtn');
