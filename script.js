@@ -8,7 +8,7 @@ import {
   typeExpense,
   totalExpense,
 } from './var';
-let expense = inputExpense.value;
+let expense = 0;
 let expenses = JSON.parse(localStorage.getItem('expenditure')) || [];
 let spent = 0;
 let expenseID = 0;
@@ -38,19 +38,41 @@ inputExpense.addEventListener('change', (e) => {
 
 //adds card and calculates expense
 addBtn.addEventListener('click', () => {
-  if (expense != 0 || null) {
-    addExpenditure();
-    addCard();
-    inputExpense.value = '';
-    typeExpense.value = 0;
-    expenseName.classList.add('hidden');
-    expenseName.classList.remove('flex');
-    expenseName.value = null;
-    expenseID++;
+  if (
+    inputExpense.value != 0 &&
+    inputExpense.value !== null &&
+    inputExpense.value !== ''
+  ) {
+    if (typeExpense.value === 'Custom') {
+      if (expenseName.value !== null && expenseName.value !== '') {
+        addingExpense();
+      } else {
+        alert('Enter Custom Expense Name');
+      }
+    } else if (typeExpense.value != 0) {
+      addingExpense();
+    } else {
+      alert('Select a category');
+    }
   } else {
     alert('Enter Some Value');
   }
 });
+
+const addingExpense = () => {
+  addExpenditure();
+  console.log(typeExpense.value);
+  // addCard();
+  updateExpenseList();
+  inputExpense.value = '';
+  typeExpense.value = 0;
+  expenseName.classList.add('hidden');
+  expenseName.classList.remove('flex');
+  expenseName.value = '';
+  expenseID++;
+  expense = 0;
+  spent = 0;
+};
 
 //Adds data into database
 const addExpenditure = () => {
@@ -73,62 +95,22 @@ const addExpenditure = () => {
   localStorage.setItem('expenditure', JSON.stringify(expenses));
 };
 
-//Adds Card on click
-const addCard = () => {
-  indexer();
-  let ul = document.createElement('div');
-  ul.className = `p-2 m-1 w-[50%] flex justify-between bg-grey-dark rounded-lg ${expense.id} `;
-  ul.id = expenseID;
-  let li = document.createElement('div');
-  li.classList.add('text-white');
-  li.id = expenseID;
-  li.textContent = `Amount : ${expense} Category : ${category}`;
-  ul.appendChild(li);
-  let delBtn = document.createElement('img');
-  delBtn.className = 'w-[20px] h-[20px] delete-btn';
-  delBtn.src = '/trash.svg';
-  delBtn.id = expenseID;
-  delBtn.addEventListener('click', (e) => {
-    deleteBtn(e.target.id);
-  });
-  // let editBtn = document.createElement('img');
-  // editBtn.src = '/editIcon.svg';
-  // editBtn.className = 'w-[20px] h-[20px] edit-btn';
-  // editBtn.id = expense.id;
-  // editBtn.addEventListener('click', (e) => {
-  //   editExpense(e.target.id);
-  // });
-  ul.appendChild(delBtn);
-  const iconWrapper = document.createElement('div');
-  iconWrapper.className = 'flex justify-between';
-  ul.appendChild(iconWrapper);
-  // iconWrapper.appendChild(editBtn);
-  iconWrapper.appendChild(delBtn);
-  listContainer.insertBefore(ul, listContainer.firstChild);
-  spent += expense;
-  totalExpense.innerText = spent;
-  if (spent != 0) {
-    expenseImg.classList.add('hidden');
-    expenseImg.classList.remove('flex');
-  }
-  if (totalExpense.classList.contains('hidden')) {
-    totalExpense.classList.remove('hidden');
-  }
-};
-
 //index and id changer
 
 const indexer = () => {
   expenses.forEach((expense) => {
     expense.id = expenses.indexOf(expense);
+    expenseID = expense.id;
   });
   localStorage.setItem('expenditure', JSON.stringify(expenses));
 };
 
-// Adds cards on load
-window.onload = () => {
+// Update List DOM element
+
+const updateExpenseList = () => {
   indexer();
   const expensesRev = [...expenses];
+  listContainer.innerHTML = '';
   expensesRev.reverse();
   expensesRev.forEach((expense) => {
     document.querySelector('expense-list');
@@ -148,84 +130,94 @@ window.onload = () => {
     delBtn.addEventListener('click', (e) => {
       deleteBtn(e.target.id);
     });
-    // let editBtn = document.createElement('img');
-    // editBtn.src = '/editIcon.svg';
-    // editBtn.className = 'w-[20px] h-[20px] edit-btn';
-    // editBtn.id = expense.id;
-    // editBtn.addEventListener('click', (e) => {
-    //   editExpense(e.target.id);
-    //   delBtn.classList.add('hidden');
-    //   editBtn.classList.add('hidden');
-    // });
-    ul.appendChild(delBtn);
+    let editBtn = document.createElement('img');
+    editBtn.src = '/editIcon.svg';
+    editBtn.className = 'w-[20px] h-[20px] edit-btn';
+    editBtn.id = expense.id;
+    editBtn.addEventListener('click', (e) => {
+      editExpense(e.target.id);
+    });
     const iconWrapper = document.createElement('div');
     iconWrapper.className = 'flex justify-between';
     ul.appendChild(iconWrapper);
-    // iconWrapper.appendChild(editBtn);
+    iconWrapper.appendChild(editBtn);
     iconWrapper.appendChild(delBtn);
-
-    spent += expense.amount;
-    totalExpense.innerText = spent;
   });
+  expenseCalc();
   if (spent != 0) {
     expenseImg.classList.add('hidden');
     expenseImg.classList.remove('flex');
   }
+  spent = 0;
 };
-const deleteBtn = (value) => {
+
+// Expense Calc
+const expenseCalc = () => {
+  spent = 0;
   expenses = JSON.parse(localStorage.getItem('expenditure')) || [];
-  console.log(expenses);
+  expenses.forEach((expense) => {
+    if (totalExpense.classList.contains('hidden')) {
+      totalExpense.classList.remove('hidden');
+    }
+    spent += expense.amount;
+    totalExpense.innerText = spent;
+  });
+};
+
+// Adds cards on load
+window.onload = updateExpenseList();
+
+// Delete Function
+const deleteBtn = (value) => {
+  indexer();
+  expenses = JSON.parse(localStorage.getItem('expenditure')) || [];
   document.getElementById(value).remove();
-  spent -= expenses[value].amount;
-  totalExpense.innerText = spent;
-  if (expenses.length == 1) {
-    localStorage.removeItem('expenditure');
-  } else {
-    expenses.splice(value, 1);
-    localStorage.setItem('expenditure', JSON.stringify(expenses));
-  }
+  expenses.splice(value, 1);
+  localStorage.setItem('expenditure', JSON.stringify(expenses));
+  indexer();
+  expenseCalc();
+  updateExpenseList();
+  expenseCalc();
   if (spent == 0) {
     expenseImg.classList.add('flex');
     expenseImg.classList.remove('hidden');
-    // totalExpense.classList.remove('flex');
     totalExpense.classList.add('hidden');
   }
 };
-// const editExpense = (objId) => {
-//   expenses = JSON.parse(localStorage.getItem('expenditure')) || [];
 
-//   const list = document.getElementById(objId);
-//   const amountEditor = document.createElement('input');
-//   amountEditor.value = expenses[objId].amount;
-//   list.appendChild(amountEditor);
-//   const typeEditor = document.createElement('input');
-//   typeEditor.value = expenses[objId].type;
-//   list.appendChild(typeEditor);
-//   const saveBtn = document.createElement('button');
-//   saveBtn.innerText = 'Save';
-//   saveBtn.id = objId;
-//   saveBtn.classList.add('saveBtn');
-//   saveBtn.addEventListener('click', (e) => {
-//     let editedExpense = {
-//       id: e.target.id,
-//       amount: Number(amountEditor.value),
-//       typeCategory: typeExpense.value,
-//       type: typeEditor.value,
-//     };
-//     console.log(editedExpense);
-//     expenses[e.target.id] = editedExpense;
-//     localStorage.setItem('expenditure', JSON.stringify(expenses));
-//     amountEditor.remove();
-//     typeEditor.remove();
-//     saveBtn.remove();
-//     const List = document.getElementsByClassName('text-white');
-//     const reloadElement = document.getElementById(e.target.id);
-//     reloadElement.innerHTML = `<div class=\"text-white\" id=\"1\">Amount : ${editedExpense.amount} Category : ${editedExpense.type}</div>
-//     <div class=\"flex justify-between\">
-//       <img src=\"/editIcon.svg\" class=\"w-[20px] h-[20px] edit-btn\" id=\"1\">
-//       <img src=\"/trash.svg\" class=\"w-[20px] h-[20px] delete-btn\" id=\"1\">
-//     </div>`;
-//     console.log(JSON.stringify(reloadElement.innerHTML));
-//   });
-//   list.appendChild(saveBtn);
-// };
+// Edit Function
+const editExpense = (objId) => {
+  indexer();
+  expenses = JSON.parse(localStorage.getItem('expenditure')) || [];
+  console.log(expenses, expenses[objId]);
+  const list = document.getElementById(objId);
+  const amountEditor = document.createElement('input');
+  list.appendChild(amountEditor);
+  const typeEditor = document.createElement('input');
+  amountEditor.value = expenses[objId].amount;
+  typeEditor.value = expenses[objId].type;
+  list.appendChild(typeEditor);
+  const saveBtn = document.createElement('button');
+  saveBtn.innerText = 'Save';
+  saveBtn.id = objId;
+  saveBtn.classList.add('saveBtn');
+  saveBtn.addEventListener('click', (e) => {
+    let editedExpense = {
+      id: Number(e.target.id),
+      amount: Number(amountEditor.value),
+      typeCategory: typeExpense.value,
+      type: typeEditor.value,
+    };
+    expenses[e.target.id] = editedExpense;
+    console.log(editedExpense);
+    expenses[e.target.id] = editedExpense;
+    localStorage.setItem('expenditure', JSON.stringify(expenses));
+    amountEditor.remove();
+    typeEditor.remove();
+    saveBtn.remove();
+    updateExpenseList();
+    expenseCalc();
+    console.log(JSON.stringify(reloadElement.innerHTML));
+  });
+  list.appendChild(saveBtn);
+};
