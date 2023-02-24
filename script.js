@@ -115,11 +115,10 @@ const updateExpenseList = () => {
   expensesRev.forEach((expense) => {
     document.querySelector('expense-list');
     let ul = document.createElement('div');
-    ul.className = `p-2 m-1 w-[50%] flex justify-between bg-grey-dark rounded-lg ${expense.id} `;
+    ul.className = `p-2 m-1 w-2/5 align-middle item-center flex  justify-between bg-grey-dark rounded-lg ${expense.id} `;
     ul.id = expense.id;
     let li = document.createElement('div');
-    li.classList.add('text-white');
-    li.classList.add('align-middle');
+    li.className = 'flex text-white items-center align-middle';
     li.id = expense.id;
     li.textContent = `Amount : ${expense.amount} Category : ${expense.type}`;
     listContainer.appendChild(ul);
@@ -141,7 +140,7 @@ const updateExpenseList = () => {
       editBtn.classList.add('hidden');
     });
     const iconWrapper = document.createElement('div');
-    iconWrapper.className = 'flex justify-between';
+    iconWrapper.className = 'flex justify-between align-center p-2 flex-wrap';
     ul.appendChild(iconWrapper);
     iconWrapper.appendChild(editBtn);
     iconWrapper.appendChild(delBtn);
@@ -194,14 +193,18 @@ const editExpense = (objId) => {
   expenses = JSON.parse(localStorage.getItem('expenditure')) || [];
   console.log(expenses, expenses[objId]);
   const list = document.getElementById(objId);
+  console.log(list);
+  const listContainer = document.createElement('div');
+  listContainer.className = 'flex justify-center items-center flex-wrap';
+  list.appendChild(listContainer);
   const amountEditor = document.createElement('input');
-  amountEditor.classList.add('text-white');
-  list.appendChild(amountEditor);
+  amountEditor.className = 'text-white bg-dark-blue rounded-lg p-2 m-2';
+  listContainer.appendChild(amountEditor);
   const typeEditor = document.createElement('input');
-  typeEditor.classList.add('text-white');
+  typeEditor.className = 'text-white bg-dark-blue rounded-lg p-2 m-2';
   amountEditor.value = expenses[objId].amount;
   typeEditor.value = expenses[objId].type;
-  list.appendChild(typeEditor);
+  listContainer.appendChild(typeEditor);
   const saveBtn = document.createElement('button');
   saveBtn.className = 'text-white hover:bg-grey hover:text-black rounded p-1';
   saveBtn.innerText = 'Save';
@@ -225,5 +228,5 @@ const editExpense = (objId) => {
     expenseCalc();
     console.log(JSON.stringify(reloadElement.innerHTML));
   });
-  list.appendChild(saveBtn);
+  listContainer.appendChild(saveBtn);
 };
