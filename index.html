@@ -2,7 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+
     <title>Expense Manager</title>
     <link rel="stylesheet" href="./style.css" />
     <script type="module" src="./script.js"></script>
@@ -30,17 +35,33 @@
       </div>
     </header>
     <div class="bg-space flex justify-center text-black flex-col w-full">
-      <div class="flex justify-center text-center items-center flex-col mt-2">
-        Expense Amount
+      <div
+        class="flex flex-col justify-center text-center items-center text-white mt-2"
+      >
+        <div class="flex items-center justify-center">
+          <h4 class="p-2">Expense Amount</h4>
+          <img
+            src="/public/cash.svg"
+            alt="money-spent"
+            class="w-[20px] h-[20px] text-white"
+          />
+        </div>
         <input
           type="number"
-          class="bg-white placeholder:text-black placeholder:opacity-60 p-2 m-2 w-2/5 appearance-none"
+          class="bg-dark-blue rounded-lg text-white placeholder:text-white placeholder:opacity-60 p-2 m-2 w-2/5 appearance-none"
           id="expense-amount"
           placeholder="Money Spent"
         />
-        <span class="input-group-text"> Category </span>
+        <div class="flex justify-center items-center">
+          <span class="input-group-text text-white p-2"> Category </span>
+          <img
+            src="/public/options.svg"
+            alt="options"
+            class="w-[20px] h-[20px]"
+          />
+        </div>
         <select
-          class="bg-white text-black m-2 w-48 h-8"
+          class="bg-dark-blue text-white rounded-lg m-2 w-2/5 h-8"
           id="inputGroupSelect03"
         >
           <option value="0" class="text-opacity-50" selected>Choose...</option>
