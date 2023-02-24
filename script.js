@@ -119,6 +119,7 @@ const updateExpenseList = () => {
     ul.id = expense.id;
     let li = document.createElement('div');
     li.classList.add('text-white');
+    li.classList.add('align-middle');
     li.id = expense.id;
     li.textContent = `Amount : ${expense.amount} Category : ${expense.type}`;
     listContainer.appendChild(ul);
