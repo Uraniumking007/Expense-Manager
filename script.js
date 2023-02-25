@@ -59,6 +59,7 @@ addBtn.addEventListener('click', () => {
   }
 });
 
+// Add button action
 const addingExpense = () => {
   addExpenditure();
   console.log(typeExpense.value);
@@ -76,7 +77,6 @@ const addingExpense = () => {
 
 //Adds data into database
 const addExpenditure = () => {
-  // let category = typeExpense.value;
   console.log(category);
 
   expenses = JSON.parse(localStorage.getItem('expenditure')) || [];
@@ -96,7 +96,6 @@ const addExpenditure = () => {
 };
 
 //index and id changer
-
 const indexer = () => {
   expenses.forEach((expense) => {
     expense.id = expenses.indexOf(expense);
@@ -106,7 +105,6 @@ const indexer = () => {
 };
 
 // Update List DOM element
-
 const updateExpenseList = () => {
   indexer();
   const expensesRev = [...expenses];
