@@ -115,10 +115,11 @@ const updateExpenseList = () => {
   expensesRev.forEach((expense) => {
     document.querySelector('expense-list');
     let ul = document.createElement('div');
-    ul.className = `p-2 m-1 w-2/5 align-middle item-center flex  justify-between bg-grey-dark rounded-lg ${expense.id} `;
+    ul.className = `p-2 m-1 sm:w-[80%] md:w-[70%] md:flex-col w-2/5 align-middle item-center flex  justify-between bg-grey-dark rounded-lg ${expense.id} `;
     ul.id = expense.id;
     let li = document.createElement('div');
-    li.className = 'flex text-white items-center align-middle';
+    li.className =
+      'flex text-white sm:text-sm items-center justify-center align-middle';
     li.id = expense.id;
     li.textContent = `Amount : ${expense.amount} Category : ${expense.type}`;
     listContainer.appendChild(ul);
@@ -140,7 +141,7 @@ const updateExpenseList = () => {
       editBtn.classList.add('hidden');
     });
     const iconWrapper = document.createElement('div');
-    iconWrapper.className = 'flex justify-between align-center p-2 flex-wrap';
+    iconWrapper.className = 'flex justify-around align-center p-2 flex-wrap';
     ul.appendChild(iconWrapper);
     iconWrapper.appendChild(editBtn);
     iconWrapper.appendChild(delBtn);
@@ -226,7 +227,6 @@ const editExpense = (objId) => {
     saveBtn.remove();
     updateExpenseList();
     expenseCalc();
-    console.log(JSON.stringify(reloadElement.innerHTML));
   });
   listContainer.appendChild(saveBtn);
 };
