@@ -11,7 +11,7 @@ This is a simple web-based expense manager application that allows you to add, e
 
 ## Usage
 
-To use the expense manager application, visit [Expense Manager](https://expensemanager.bhaveshp.dev/). 
+To use the expense manager application, visit [expensemanager.bhaveshp.dev](https://expensemanager.bhaveshp.dev/). 
 
 ### Adding an Expense
 
